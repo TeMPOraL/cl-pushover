@@ -46,3 +46,20 @@ Optional parameters available for messages sent with `+PRIORITY-EMERGENCY+' prio
 ;;; TODO call for canceling emergency-priority retries
 
 ;;; TODO call for user/group verification
+
+
+
+;;; TODO Subscriptions API (maybe in another file)
+
+
+
+;;; TODO Groups API (maybe in another file)
+
+
+
+;;; TODO Licensing API (maybe in another file)
+
+
+
+;;; TODO Open Client API (maybe in another file, or a separate lib altogether)
+
