@@ -36,8 +36,16 @@ Optional parameters available for messages sent with `+PRIORITY-EMERGENCY+' prio
                message)
     ;; TODO throw up - required parameters
     )
+  (unless (and (numberp priority)       ;integerp?
+               (<= +priority-lowest+ priority +priority-emergency+))
+    ;; TODO throw up - parameter error
+    )
 
   ;; TODO implement
+
+  ;; - verify input parameters
+  ;; - limit input parameters
+  ;; - 
   )
 
 
