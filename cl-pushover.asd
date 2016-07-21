@@ -8,7 +8,7 @@
   :version "0.0.1"
   :description "A set of Common Lisp bindings to Pushover - a system for sending push notifications to mobile devices."
 
-  :license "TBD"
+  :license "MIT"
   :homepage "https://github.com/TeMPOraL/cl-pushover"
   :bug-tracker "https://github.com/TeMPOraL/cl-pushover/issues"
   :source-control (:git "https://github.com/TeMPOraL/cl-pushover.git")
@@ -20,5 +20,4 @@
                #:drakma)
   
   :components ((:file "package")
-
                (:file "main")))
