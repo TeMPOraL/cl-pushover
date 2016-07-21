@@ -46,8 +46,8 @@ Optional parameters available for messages sent with `+PRIORITY-EMERGENCY+' prio
     (signal 'required-argument-missing))
   
   (check-type priority pushover-priority "a valid Pushover message priority value")
-  (check-type retry (or null (integer +min-retry+ *)) "a valid Pushover retry time value")
-  (check-type expire (or null (integer 0 +max-expire+)) "a valid Pushover expire time value")
+  (check-type retry (or null (integer #.+min-retry+ *)) "a valid Pushover retry time value")
+  (check-type expire (or null (integer 0 #.+max-expire+)) "a valid Pushover expire time value")
 
   ;; actual sending
   (%send-pushover destination-key title message token device url-title url priority timestamp sound html callback retry expire))
@@ -58,9 +58,9 @@ Refer to `SEND-PUSHOVER' documentation for meaning of parameters."
   (let ((params (remove-if #'null
                            (mapcar (lambda (name value)
                                      (when value
-                                       (cons name value)))
+                                       (cons name (format nil "~A" value))))
                                    (list "token" "user" "message" "title" "device" "url" "url_title" "priority" "timestamp" "sound" "html" "callback" "retry" "expire")
-                                   (list token destination-key message title device url url_title priority timestamp sound (when html 1) callback retry expire)))))
+                                   (list token destination-key message title device url url-title priority timestamp sound (when html 1) callback retry expire)))))
     (drakma:http-request *pushover-api-endpoint-url*
                          :method :post
                          :external-format-out :UTF-8
