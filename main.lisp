@@ -34,10 +34,12 @@ Optional parameters:
 - `SOUND' - a string name of a sound to be played on recipent's device. Refer to Pushover API details for a list of possible values.
 - `HTML' - set to `T' if message is formatted as HTML. Only some tags are supported; refer to Pushover API details for a list of allowed tags.
 
-Optional parameters available for messages sent with `+PRIORITY-EMERGENCY+' priority:
-- `CALLBACK' - an URL for messages that Pushover servers will submit a POST request to when the message was acknowledged by recipent.
+Required parameters for messages sent with `+PRIORITY-EMERGENCY+' priority:
 - `RETRY' - how often (in seconds) Pushover should resend the same notification. Minimum value - 30 seconds.
-- `EXPIRE' - for how many seconds the message will continue to be retried unless acknowledged beforehand. Maximum value - 86400 seconds (24 hours)."
+- `EXPIRE' - for how many seconds the message will continue to be retried unless acknowledged beforehand. Maximum value - 86400 seconds (24 hours).
+
+Optional parameters available for messages sent with `+PRIORITY-EMERGENCY+' priority:
+- `CALLBACK' - an URL for messages that Pushover servers will submit a POST request to when the message was acknowledged by recipent."
 
   ;; rudimentary parameter validation
   (unless (and token
@@ -46,8 +48,9 @@ Optional parameters available for messages sent with `+PRIORITY-EMERGENCY+' prio
     (signal 'required-argument-missing))
   
   (check-type priority pushover-priority "a valid Pushover message priority value")
-  (check-type retry (or null (integer #.+min-retry+ *)) "a valid Pushover retry time value")
-  (check-type expire (or null (integer 0 #.+max-expire+)) "a valid Pushover expire time value")
+  (when (= priority +priority-emergency+)
+    (check-type retry (integer #.+min-retry+ *) "a valid Pushover retry time value")
+    (check-type expire (integer 0 #.+max-expire+) "a valid Pushover expire time value"))
 
   ;; actual sending
   (%send-pushover destination-key title message token device url-title url priority timestamp sound html callback retry expire))
