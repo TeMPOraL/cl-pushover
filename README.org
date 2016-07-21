@@ -1,5 +1,56 @@
 #+title: CL-PUSHOVER - Common Lisp bindings to Pushover
 #+startup: hidestars
 
-TODO readme contents go here.
+An utility library for using [[https://pushover.net/][Pushover]] notifications in Common Lisp.
 
+The goal of this library is complete coverage of Pushover APIs. However, it is being
+developed as a part of another project that occupies most of my time, so features
+will be added as needed or as the time allows.
+
+* Status
+
+** Implemented
+   - Full API for [[https://pushover.net/api#messages][sending Pushover notifications]].
+
+** To be implemented
+   - Actual handling of [[https://pushover.net/api#friendly][errors reported by Pushover API]].
+   - API for [[https://pushover.net/api#receipt][querying receipts]].
+   - API for [[https://pushover.net/api#receipt][cancelling emergency-priority retries]].
+   - API for [[https://pushover.net/api#verification][user/group verification]].
+   - API for [[https://pushover.net/api/subscriptions][subscriptions]].
+   - API for [[https://pushover.net/api/groups][groups]].
+   - API for [[https://pushover.net/api/licensing][licensing]].
+   - Toolkit for the [[https://pushover.net/api/client][Open Client API]] (possibly as an another library).
+
+
+* How to use
+  Include this library in your Quicklisp's local projects. Load with standard
+  #+BEGIN_SRC lisp
+    (ql:quickload :cl-pushover)
+  #+END_SRC
+
+  To send a Pushover notifications, you need to provide at least three pieces of information:
+  - your Pushover app token
+  - destination user/group token
+  - message body
+
+  The simplest request would be:
+  #+BEGIN_SRC lisp
+    (cl-pushover:send-pushover :token "your app token" :destination-key "destination user/group token" :message "Body of the message.")
+  #+END_SRC
+
+  You can omit the ~:token~ parameter by setting it in a variable ~cl-pushover:*default-app-token*~.
+
+  For more, refer to the docstring of ~cl-pushover:send-pushover~ function and the documentation of Pushover API.
+
+  Note, that if you want to skip type/sanity checks for some reason (e.g. efficiency), you can call
+  ~cl-pushover::%send-pushover~, which is an unsafe version of the ~cl-pushover:send-pushover~ function.
+  Please refer to the code for details.
+
+  Examples of other Pushover APIs will be added as the support for those APIs is implemented.
+
+* Contributions
+  Issues and pull requests welcome :).
+
+* License
+  MIT. See [[file:LICENSE][LICENSE]] file.
