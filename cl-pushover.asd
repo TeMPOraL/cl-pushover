@@ -21,4 +21,4 @@
   
   :components ((:file "package")
 
-               (:file "main" :depends-on ("grimoire"))))
+               (:file "main")))
