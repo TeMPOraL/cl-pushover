@@ -1,7 +1,5 @@
 (in-package #:cl-pushover)
 
-;;; TODO.
-
 (defparameter *pushover-api-endpoint-url* "https://api.pushover.net/1/messages.json")
 (defparameter *default-app-token* nil)
 
@@ -45,7 +43,7 @@ Optional parameters available for messages sent with `+PRIORITY-EMERGENCY+' prio
   (unless (and token
                destination-key
                message)
-    (signal 'required-argument-missing))
+    (error 'required-argument-missing))
   
   (check-type priority pushover-priority "a valid Pushover message priority value")
   (when (= priority +priority-emergency+)
