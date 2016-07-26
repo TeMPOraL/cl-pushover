@@ -18,6 +18,8 @@
              (format stream "One or more required arguments missing or nil."))))
 
 (deftype pushover-priority () `(integer ,+priority-lowest+ ,+priority-emergency+))
+(deftype pushover-retry-value () `(integer ,+min-retry+ *))
+(deftype pushover-expire-value () `(integer 0 ,+max-expire+))
 
 (defun send-pushover (&key destination-key title message (token *default-app-token*) device url-title url (priority +priority-normal+) timestamp sound html callback retry expire)
   "Send a Pushover using your app's `TOKEN' to user/group identified by `DESTINATION-KEY', containing `MESSAGE'.
@@ -47,8 +49,8 @@ Optional parameters available for messages sent with `+PRIORITY-EMERGENCY+' prio
   
   (check-type priority pushover-priority "a valid Pushover message priority value")
   (when (= priority +priority-emergency+)
-    (check-type retry (integer #.+min-retry+ *) "a valid Pushover retry time value")
-    (check-type expire (integer 0 #.+max-expire+) "a valid Pushover expire time value"))
+    (check-type retry pushover-retry-value "a valid Pushover retry time value")
+    (check-type expire pushover-expire-value "a valid Pushover expire time value"))
 
   ;; actual sending
   (%send-pushover destination-key title message token device url-title url priority timestamp sound html callback retry expire))
